@@ -8,20 +8,13 @@ html {
 }
 
 .wrapper {
-  width: 100%; /* Ширина обертки */
-
-  margin: auto; /* Автоматические отступы для центрирования */
-  border: 1px solid #555; /* Граница для всего контента */
-  border-radius: 10px; /* Скругленные углы обертки */
-  overflow: hidden; /* Скрыть переполненный контент */
+  width: 100%; 
+  margin: auto; 
+  border: 1px solid #555; 
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-/* header{
-  width: 549px;
-height: 53px;
-} */
-
-/* Стили для общего контейнера */
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -34,19 +27,6 @@ height: 53px;
   border-bottom: 1px solid #555;
 }
 
-.header button,
-.action-icons button {
-  background: none;
-  border: none;
-  color: inherit;
-}
-
-/* Стили для логотипа в кнопке */
-.header button img {
-  width: 24px;
-}
-
-/* Стили для контейнера пользователя */
 .user-container {
   display: flex;
   background-color: #000;
@@ -54,18 +34,18 @@ height: 53px;
   border-radius: 10px;
 }
 
-/* Стили для фото профиля */
+
 .tweet-photo {
   border-radius: 50%;
   margin-right: 10px;
 }
 
-/* Стили для формы отправки */
+
 .post-form {
   flex-grow: 1;
 }
 
-/* Стили для поля ввода */
+
 .post-form input {
   width: 100%;
   background-color: #000;
@@ -75,16 +55,32 @@ height: 53px;
   border-radius: 20px;
 }
 
-/* Стили для кнопки 'Tweet' */
-.heart-button .tweet {
-  display: flex;
-  justify-content: space-between;
-  background-color: #1da1f2;
-  color: #fff;
-  border-radius: 20px;
-  padding: 10px 20px;
-  margin-left: 10px;
-}
 
-.reaction-button {
-}
+.heart-button {
+    border: none;
+    background-color: transparent;
+    color: aliceblue;
+    cursor: pointer;
+    width: 20px;
+    height: 20px; 
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+  }
+
+ .heart-icon{
+  width: 20px; 
+    height: 20px; 
+ }
+
+ .span{
+  gap: 5px;
+ }
+
+ .tweet {
+  display: flex;
+  justify-content: end;
+  border-radius: 36px;
+opacity: 0.5;
+background: var(--Blue, #1D9BF0);
+ }
