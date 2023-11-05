@@ -1,56 +1,47 @@
-// Инициализация функции при загрузке документа
-document.addEventListener("DOMContentLoaded", function() {
-  // Обработчики для кнопки like
+document.addEventListener("DOMContentLoaded", (event) => {
+  // Получаем элементы только один раз, при загрузке документа
+  const postButton = document.querySelector('.tweet-button .tweet');
+  const postInput = document.getElementById('postTitle');
   const heartButton = document.querySelector(".heart-button");
   const reactionCount = document.querySelector(".reaction-count");
 
-  heartButton.addEventListener("click", function() {
-    saveReaction();
-    incrementReactionCount(reactionCount);
+  // Обработчик для кнопки "сердечко"
+  heartButton.addEventListener("click", () => {
+    const postId = 1; // ID поста должно быть определено или получено откуда-то
+    const userId = 1; // ID пользователя должно быть определено или получено откуда-то
+    saveReaction(postId, userId, 'like');
+
+    const currentCount = parseInt(reactionCount.textContent, 10);
+    reactionCount.textContent = currentCount + 1;
   });
 
-  // Обработчики для кнопки добавления поста
-  const postButton = document.querySelector('.tweet-button .tweet'); 
-  const postInput = document.getElementById('postTitle'); 
+  // Функция для сохранения реакции
+  function saveReaction(postId, userId, reactionType) {
+    // Здесь должна быть логика для сохранения реакции, например, API запрос
+    console.log(`Реакция ${reactionType} сохранена для поста ${postId} пользователя ${userId}`);
+  }
 
-  postButton.addEventListener('click', function() {
-    createMainUserAddPostForm(postInput.value);
+  // Обработчик для кнопки "Tweet"
+  postButton.addEventListener('click', async () => {
+    const postContent = postInput.value;
+    const userId = 1; // ID пользователя должно быть определено или получено откуда-то
+
+    try {
+      const dataObject = {
+        body: postContent,
+        userId: userId,
+      };
+
+      const postResponse = await fetch("https://dummyjson.com/posts/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataObject),
+      });
+
+      const postResult = await postResponse.json();
+      console.log(postResult);
+    } catch (error) {
+      console.error("Ошибка:", error);
+    }
   });
 });
-
-function saveReaction() {
-  // Сохранение реакции пользователя
-  // Здесь должен быть код для отправки информации о реакции на сервер
-  console.log('Реакция сохранена');
-}
-
-function incrementReactionCount(reactionCountElement) {
-  // Инкрементация счетчика реакций
-  const currentCount = parseInt(reactionCountElement.textContent, 10);
-  reactionCountElement.textContent = currentCount + 1;
-}
-
-async function createMainUserAddPostForm(postContent) {
-  // Создание поста
-  try {
-    const userId = 1; // ID пользователя должен быть получен из другого источника или выбран здесь
-    const response = await fetch("https://dummyjson.com/users/1");
-    const userData = await response.json();
-
-    const dataObject = {
-      body: postContent,
-      userId: userData.id,
-    };
-
-    const postResponse = await fetch("https://dummyjson.com/posts/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataObject),
-    });
-
-    const postResult = await postResponse.json();
-    console.log(postResult);
-  } catch (error) {
-    console.error("Ошибка:", error);
-  }
-}
