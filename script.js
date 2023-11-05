@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   // Получаем элементы только один раз, при загрузке документа
-  const postButton = document.querySelector('.tweet-button .tweet');
-  const postInput = document.getElementById('postTitle');
+  const postButton = document.querySelector(".tweet-button .tweet");
+  const postInput = document.getElementById("postTitle");
   const heartButton = document.querySelector(".heart-button");
   const reactionCount = document.querySelector(".reaction-count");
 
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   heartButton.addEventListener("click", () => {
     const postId = 1; // ID поста должно быть определено или получено откуда-то
     const userId = 1; // ID пользователя должно быть определено или получено откуда-то
-    saveReaction(postId, userId, 'like');
+    saveReaction(postId, userId, "like");
 
     const currentCount = parseInt(reactionCount.textContent, 10);
     reactionCount.textContent = currentCount + 1;
@@ -18,11 +18,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Функция для сохранения реакции
   function saveReaction(postId, userId, reactionType) {
     // Здесь должна быть логика для сохранения реакции, например, API запрос
-    console.log(`Реакция ${reactionType} сохранена для поста ${postId} пользователя ${userId}`);
+    console.log(
+      `Реакция ${reactionType} сохранена для поста ${postId} пользователя ${userId}`
+    );
   }
 
   // Обработчик для кнопки "Tweet"
-  postButton.addEventListener('click', async () => {
+  postButton.addEventListener("click", async () => {
     const postContent = postInput.value;
     const userId = 1; // ID пользователя должно быть определено или получено откуда-то
 
