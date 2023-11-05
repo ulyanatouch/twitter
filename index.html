@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="wrapper">
     <header>
-      <h1>Home</h1>
-      <button>
-        <img src="" alt="" />
-      </button>
+      <div class="header-container">
+        <h2>Home</h2>
+        <button class="top-tweets" >
+          <img src="./media/Top-Tweets.svg" alt="top-tweets" />
+        </button>
+      </div>
     </header>
     <div class="user-container">
       <img src="./media/chinaman.svg" alt="user-photo" class="tweet-photo" />
@@ -22,17 +25,19 @@
           placeholder="What’s happening?"
           required
         />
-        <div class="action-icons">
-          <button><img src="" alt="" /></button>
-          <button><img src="" alt="" /></button>
-          <button><img src="" alt="" /></button>
-          <button><img src="" alt="" /></button>
-          <button><img src="" alt="" /></button>
-          <button onclick="addPost()" class="tweet">Tweet</button>
-        </div>
-      </div>
+        <div class="reaction-button">
+            <button class="heart-button">
+              <i class="fa-sharp fa-light fa-heart" style="color: #ff0000;"></i>
+            <img src="./media/heart.svg" alt="Like" class="heart-icon" />
+            <span class="reaction-count">0</span> <!-- Счетчик реакций -->
+            </button>
+          </div>
+        <div class="tweet-button">
+  <button onclick="addPost()" class="tweet">Tweet</button>
+         </div>
     </div>
-    <section class="post-section">
+  </div>
+    <!-- <section class="post-section">
       <img src="./media/cnn.svg" alt="Profile" class="cnn" />
       <h2>CNN</h2>
       <p>
@@ -72,8 +77,8 @@
 
       <a href="" class="logo-link"
         ><img src="./media/tweet_title.svg" alt="tweet-title" />
-        <!-- <span> @nytimes.7m</span> -->
-      </a>
+        <span> @nytimes.7m</span> -->
+      <!-- </a>
       <h2>
         Gardening boomed during the pandemic. Six Black writers share how it has
         helped them re-establish, and reimagine, a connection to cultivation and
@@ -100,7 +105,7 @@
           <img src="./media/share.svg" alt="share" />
         </button>
       </div>
-    </section>
+    </section> --> 
     <script src="./script.js"></script>
   </body>
 </html>
