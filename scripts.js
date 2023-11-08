@@ -1,11 +1,20 @@
+import { getPosts, getUser, addNewPost } from './requests.js'
+
 const root = document.querySelector('#root')
 const form = document.querySelector('#postForm')
 const header = document.querySelector('header')
 const textInput = document.querySelector('#text')
 const userAvatarElement = document.querySelector('#userAvatar1')
 const userNameElement = document.querySelector('#userName1')
-const id = 27
 
+const showUserAvatar = async () => {
+  // чтобы при загрузке страницы получилаись данные пользователя, который будет писать посты
+  const user = await getUser(27)
+  userAvatarElement.src = user.image
+}
+showUserAvatar()
+
+// NEW POST
 const renderNewPost = (post, user) => {
   const postCard = document.createElement('div')
   const postText = document.createElement('p')
@@ -51,67 +60,25 @@ const renderNewPost = (post, user) => {
   root.prepend(header, form, postCard)
 }
 
-const addNewPost = async (post) => {
-  try {
-    const response = await fetch('https://dummyjson.com/posts/add', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(post),
-    })
-
-    const postData = await response.json()
-
-    const userResponse = await fetch(`https://dummyjson.com/user/${id}`)
-    const userData = await userResponse.json()
-
-    console.log(userData)
-    renderNewPost(postData, userData)
-  } catch (error) {
-    console.error('Error:', error)
-  }
-}
-
-form.addEventListener('submit', (event) => {
+// ОТПРАВКА ФОРМЫ
+form.addEventListener('submit', async (event) => {
   event.preventDefault()
-
+  const user = await getUser(27)
+  userAvatarElement.src = user.image
   const newPost = {
     body: textInput.value,
-    userId: id,
+    userId: user.id,
   }
-  console.log(newPost)
-  addNewPost(newPost)
+
+  addNewPost(newPost, (postData, userData) => renderNewPost(postData, userData))
   textInput.value = ''
 })
 
-const getPost = async () => {
-  try {
-    const postResponse = await fetch('https://dummyjson.com/posts')
-    const postData = await postResponse.json()
-    console.log(postData.posts)
-
-    const userResponse = await fetch(`https://dummyjson.com/users`)
-    const userData = await userResponse.json()
-    console.log(userData.users)
-
-    renderUserPost(postData.posts, userData.users)
-
-    const userWithId = userData.users.find((user) => user.id === id)
-
-    if (userWithId) {
-      userAvatarElement.src = userWithId.image
-    }
-  } catch (error) {
-    console.error(`Произошла ошибка: ${error} `)
-  }
-}
-
-const renderUserPost = (posts, users) => {
-  posts.forEach((post) => {
-    console.log(post)
-    const user = users.find((user) => user.id === post.userId)
-
+const renderUserPost = async () => {
+  const posts = await getPosts()
+  // forEach с асинхронной функцией работать не будет
+  for (const post of posts.slice(0, 5)) {
+    const user = await getUser(post.userId)
     const postCard = document.createElement('div')
     const postText = document.createElement('p')
     const likeCounter = document.createElement('p')
@@ -150,13 +117,11 @@ const renderUserPost = (posts, users) => {
     reaction.src = 'media/React.svg'
     userName.innerText = `@${user.username}`
     userAvatar.src = user.image
-    userAvatarElement.src = user.image
     divLike.append(reaction, likeCounter)
     divAvatar.append(userName, postText)
     divPost.append(userAvatar, divAvatar)
     postCard.append(divPost, divLike)
     root.append(postCard)
-  })
+  }
 }
-
-getPost()
+renderUserPost()
